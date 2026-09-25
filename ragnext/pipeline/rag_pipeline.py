@@ -118,7 +118,31 @@ class RAGPipeline:
 
         默认走离线兜底链路；当配置指向 SOTA 后端（minilm / faiss / openai /
         rerank）且依赖可用时启用，否则在构造对应类时抛出对应错误码。
+
+        环境变量覆盖（README §4）：若设置了 ``RAGNEXT_EMBEDDER`` /
+        ``RAGNEXT_STORE`` / ``RAGNEXT_GENERATOR`` / ``RAGNEXT_MODEL`` /
+        ``RAGNEXT_RERANK``，则以其值覆盖对应配置项。仅当变量存在时覆盖，
+        未设置时保持 ``config`` 原值（含 CLI 显式参数），保证向后兼容。
         """
+        import copy
+        import os
+
+        # 以副本接收，避免修改调用方的 config 实例。
+        config = copy.copy(config)
+        _ENV_OVERRIDES = {
+            "embedder_type": "RAGNEXT_EMBEDDER",
+            "store_type": "RAGNEXT_STORE",
+            "generator_type": "RAGNEXT_GENERATOR",
+            "model_name": "RAGNEXT_MODEL",
+        }
+        for attr, env in _ENV_OVERRIDES.items():
+            val = os.getenv(env)
+            if val is not None:
+                setattr(config, attr, val)
+        rerank_env = os.getenv("RAGNEXT_RERANK")
+        if rerank_env is not None:
+            config.use_rerank = rerank_env.strip().lower() in ("1", "true", "yes", "on")
+
         from ragnext.embedding.local import LocalHashingEmbedder
         from ragnext.embedding.minilm import MiniLMEmbedder
         from ragnext.generation.extractive import ExtractiveGenerator

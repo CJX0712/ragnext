@@ -104,6 +104,11 @@ python -m ragnext.examples.run_demo
 `generator_type ∈ {extractive,openai}`、`use_rerank=True`。任意可选依赖缺失时自动跳过，
 不影响离线主线（见各模块 `importorskip` 隔离）。
 
+> 环境变量一键切换（由 `RAGPipeline.from_config` 读取；未设置时保持显式配置/默认值）：
+> `RAGNEXT_EMBEDDER`(local|minilm)、`RAGNEXT_STORE`(numpy|faiss)、
+> `RAGNEXT_GENERATOR`(extractive|openai)、`RAGNEXT_MODEL`(模型名)、`RAGNEXT_RERANK`(0|1)。
+> LLM 密钥 / 地址仍走 `OPENAI_API_KEY` / `OPENAI_BASE_URL`（由 `OpenAICompatibleGenerator` 读取）。
+
 ---
 
 ## 5. 测试与基准
