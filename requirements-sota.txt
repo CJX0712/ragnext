@@ -1,0 +1,7 @@
+# 可选 SOTA 后端依赖（需网络/密钥；安装失败不影响核心链路）
+# 由 Makefile / setup 脚本以“失败容忍”方式尝试安装。
+faiss-cpu==1.10.0
+sentence-transformers==3.3.1
+ragas==0.2.10
+openai==1.68.2
+datasets==3.2.0

@@ -1,0 +1,8 @@
+colorama==0.4.6
+faiss-cpu==1.10.0
+iniconfig==2.3.0
+numpy==2.2.5
+packaging==26.3
+pluggy==1.6.0
+pypdf==5.3.1
+pytest==8.3.5

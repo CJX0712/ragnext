@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ragnext"
+version = "0.1.0"
+description = "模块化检索增强生成（RAG）系统：离线兜底链路 + 可插拔 SOTA 后端"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "晨星" }]
+keywords = ["rag", "retrieval-augmented-generation", "embedding", "vector-search"]
+dependencies = [
+    "numpy==2.2.5",
+    "pypdf==5.3.1",
+]
+
+[project.optional-dependencies]
+sota = [
+    "faiss-cpu==1.10.0",
+    "sentence-transformers==3.3.1",
+    "ragas==0.2.10",
+    "openai==1.68.2",
+    "datasets==3.2.0",
+]
+test = [
+    "pytest==8.3.5",
+]
+
+[tool.setuptools.packages.find]
+include = ["ragnext*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
